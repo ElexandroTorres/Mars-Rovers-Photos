@@ -6,12 +6,14 @@ import 'package:mars_rovers_photos/repositories/rover_manifest_repository.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 //import 'rover_manifest_repository_test.mocks.dart';
-import 'datas/rover_manifest_repository_test_data.dart' as mock_data;
+import 'rover_manifest_repository_test.mocks.dart';
+import 'rover_manifest_repository_test_data.dart' as mock_data;
 //import 'rover_manifest_repository_test_data.dart' as mock_data;
 
 @GenerateMocks([http.Client])
 main() {
   final client = MockClient();
+
   final repository = RoverManifestRepository(client: client);
   group('Rover Infos | ', () {
     group('Curiosity |', () {
