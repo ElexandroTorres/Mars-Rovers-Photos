@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mars_rovers_photos/screens/select_rover_screen.dart';
 import 'package:mars_rovers_photos/screens/splash_screen.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MarsRoversPhotos extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const SplashScreen(),
-        '/home': (context) => SelectRoverScreen(),
+        '/home': (context) => const SelectRoverScreen(),
       },
       theme: ThemeData(
         primarySwatch: Colors.orange,

@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
     RoverManifest perseveranceManifest =
         await roverManifestRepository.getRoverManifest('Perseverance');
 
-    Navigator.pushNamed(context, '/home', arguments: {
+    Navigator.pushReplacementNamed(context, '/home', arguments: {
       'curiosity': curiosityManifest,
       'spirit': spiritManifest,
       'opportunity': opportunityManifest,
