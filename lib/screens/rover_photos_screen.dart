@@ -21,6 +21,8 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
       RoverPhotosRepository(client: http.Client());
   //String result = 'teste';
 
+  late final TextEditingController selectBySolController;
+
   _getPhotos() {
     roverPhotosRepository.getLatestPhotos(widget.roverName).then((result) {
       setState(() {
@@ -29,8 +31,8 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
     });
   }
 
-  _getPhotosBySol() {
-    roverPhotosRepository.getPhotosBySol(widget.roverName, 71).then((result) {
+  _getPhotosBySol({required int sol}) {
+    roverPhotosRepository.getPhotosBySol(widget.roverName, sol).then((result) {
       setState(() {
         photos = result;
       });
@@ -41,6 +43,13 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
   void initState() {
     super.initState();
     _getPhotos();
+    selectBySolController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    selectBySolController.dispose();
+    super.dispose();
   }
 
   String _dropValue = 'latest_photos';
@@ -61,7 +70,7 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
               child: Column(
                 children: [
                   Container(
-                    color: Colors.red,
+                    color: Colors.grey,
                     child: Column(
                       children: [
                         Text(
@@ -83,7 +92,7 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                                   child: Text('Fotos por Sol'),
                                   value: 'photos_by_sol',
                                   onTap: () {
-                                    _getPhotosBySol();
+                                    _getPhotosBySol(sol: 2);
                                   },
                                 ),
                               ],
@@ -95,8 +104,25 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text('Selecione o sol'),
+                            SizedBox(width: 16),
                             Expanded(
-                              child: TextField(),
+                              child: TextField(
+                                controller: selectBySolController,
+                                keyboardType: TextInputType.numberWithOptions(
+                                  signed: false,
+                                  decimal: false,
+                                ),
+                                decoration: InputDecoration(
+                                  focusColor: Colors.orange,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                _getPhotosBySol(
+                                    sol: int.parse(selectBySolController.text));
+                              },
+                              child: Icon(Icons.search),
                             ),
                           ],
                         ),
