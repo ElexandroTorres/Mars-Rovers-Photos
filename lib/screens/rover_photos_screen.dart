@@ -19,7 +19,6 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
   List<Photo> photos = [];
   RoverPhotosRepository roverPhotosRepository =
       RoverPhotosRepository(client: http.Client());
-  //String result = 'teste';
 
   late final TextEditingController selectBySolController;
 
@@ -52,113 +51,97 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
     super.dispose();
   }
 
-  String _dropValue = 'latest_photos';
-
-  void dropDownCallBack(String? selectedValue) {
+  List<String> _dropDownItens = ['latest_photos', 'photos_by_sol'];
+  String? _selectedItem = 'latest_photos';
+  /*
+  void dropDownCallBack(String? selectedItem) {
     if (selectedValue is String) {
       setState(() {
         _dropValue = selectedValue;
       });
     }
   }
+  */
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: photos.length > 0
-          ? SafeArea(
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              color: Colors.grey,
               child: Column(
                 children: [
-                  Container(
-                    color: Colors.grey,
-                    child: Column(
-                      children: [
-                        Text(
-                          'Personalização de busca',
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text('Tipo de busca'),
-                            DropdownButton(
-                              value: _dropValue,
-                              items: [
-                                DropdownMenuItem(
-                                  child: Text('Ultimas fotos'),
-                                  value: 'latest_photos',
-                                  onTap: () {},
-                                ),
-                                DropdownMenuItem(
-                                  child: Text('Fotos por Sol'),
-                                  value: 'photos_by_sol',
-                                  onTap: () {
-                                    _getPhotosBySol(sol: 2);
-                                  },
-                                ),
-                              ],
-                              onChanged: dropDownCallBack,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text('Selecione o sol'),
-                            SizedBox(width: 16),
-                            Expanded(
-                              child: TextField(
-                                controller: selectBySolController,
-                                keyboardType: TextInputType.numberWithOptions(
-                                  signed: false,
-                                  decimal: false,
-                                ),
-                                decoration: InputDecoration(
-                                  focusColor: Colors.orange,
-                                ),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                _getPhotosBySol(
-                                    sol: int.parse(selectBySolController.text));
-                              },
-                              child: Icon(Icons.search),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                  Text(
+                    'Personalização de busca',
                   ),
-                  Expanded(
-                    child: GridView.builder(
-                      itemCount: photos.length,
-                      itemBuilder: (context, index) {
-                        return PhotoItem(
-                          imageUrl: photos[index].imgSrc,
-                        );
-                      },
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text('Tipo de busca'),
+                      DropdownButton(
+                        value: _selectedItem,
+                        items: _dropDownItens
+                            .map(
+                              (item) => DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (item) => setState(() {
+                          _selectedItem = item.toString();
+                        }),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text('Selecione o sol'),
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: TextField(
+                          controller: selectBySolController,
+                          keyboardType: TextInputType.numberWithOptions(
+                            signed: false,
+                            decimal: false,
+                          ),
+                          decoration: InputDecoration(
+                            focusColor: Colors.orange,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          _getPhotosBySol(
+                              sol: int.parse(selectBySolController.text));
+                        },
+                        child: Icon(Icons.search),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            )
-          : Center(child: CircularProgressIndicator()),
+            ),
+            /*
+            Expanded(
+              child: GridView.builder(
+                itemCount: photos.length,
+                itemBuilder: (context, index) {
+                  return PhotoItem(
+                    imageUrl: photos[index].imgSrc,
+                  );
+                },
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
+              ),
+            ),
+            */
+          ],
+        ),
+      ),
     );
   }
 }
-
-
-
-/**
- * 
- * Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                RoverPhotosScreen(roverName: roverManifest.name!),
-          ),
- */
-
-//
