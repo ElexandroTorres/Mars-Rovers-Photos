@@ -66,63 +66,73 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.orange,
       body: SafeArea(
         child: Column(
           children: [
             Container(
-              color: Colors.grey,
-              child: Column(
-                children: [
-                  Text(
-                    'Personalização de busca',
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text('Tipo de busca'),
-                      DropdownButton(
-                        value: _selectedItem,
-                        items: _dropDownItens
-                            .map(
-                              (item) => DropdownMenuItem(
-                                value: item,
-                                child: Text(item),
-                              ),
-                            )
-                            .toList(),
-                        onChanged: (item) => setState(() {
-                          _selectedItem = item.toString();
-                        }),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text('Selecione o sol'),
-                      SizedBox(width: 16),
-                      Expanded(
-                        child: TextField(
-                          controller: selectBySolController,
-                          keyboardType: TextInputType.numberWithOptions(
-                            signed: false,
-                            decimal: false,
-                          ),
-                          decoration: InputDecoration(
-                            focusColor: Colors.orange,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Text(
+                      'Opções de busca',
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text('Tipo de busca'),
+                        DropdownButton(
+                          value: _selectedItem,
+                          items: _dropDownItens
+                              .map(
+                                (item) => DropdownMenuItem(
+                                  value: item,
+                                  child: Text(item),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (item) => setState(() {
+                            _selectedItem = item.toString();
+                          }),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text('Selecione o sol'),
+                        SizedBox(width: 16),
+                        Expanded(
+                          child: TextField(
+                            controller: selectBySolController,
+                            keyboardType: TextInputType.numberWithOptions(
+                              signed: false,
+                              decimal: false,
+                            ),
+                            decoration: InputDecoration(
+                              focusColor: Colors.orange,
+                            ),
                           ),
                         ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          _getPhotosBySol(
-                              sol: int.parse(selectBySolController.text));
-                        },
-                        child: Icon(Icons.search),
-                      ),
-                    ],
-                  ),
-                ],
+                        TextButton(
+                          onPressed: () {
+                            _getPhotosBySol(
+                                sol: int.parse(selectBySolController.text));
+                          },
+                          child: Icon(Icons.search),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             /*
