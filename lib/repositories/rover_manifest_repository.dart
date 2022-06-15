@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:mars_rovers_photos/model/rover_manifest.dart';
 import 'package:mars_rovers_photos/repositories/interfaces/rover_manifest_repository_interface.dart';
 import 'package:http/http.dart' as http;
-import 'package:mars_rovers_photos/repositories/mars_rover_photos_api_infos.dart';
+import 'package:mars_rovers_photos/utils/constants.dart';
 
 class RoverManifestRepository implements IRoverManifestRepository {
   final http.Client client;
@@ -11,8 +11,7 @@ class RoverManifestRepository implements IRoverManifestRepository {
 
   @override
   Future<RoverManifest> getRoverManifest(String roverName) async {
-    var url =
-        'https://api.nasa.gov/mars-photos/api/v1/manifests/${roverName}/?api_key=${apiKey}';
+    var url = '${manifestUrl}/${roverName}/?api_key=${apiKey}';
 
     RoverManifest roverManifest;
 

@@ -3,7 +3,9 @@ import 'package:mars_rovers_photos/model/photo.dart';
 import 'package:mars_rovers_photos/repositories/rover_photos_repository.dart';
 import 'package:mars_rovers_photos/screens/photo_details_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:mars_rovers_photos/viewmodel/rover_photos_viewmodel.dart';
 import 'package:mars_rovers_photos/widgets/photo_item.dart';
+import 'package:provider/provider.dart';
 
 class RoverPhotosScreen extends StatefulWidget {
   final String roverName;
@@ -41,6 +43,8 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
   @override
   void initState() {
     super.initState();
+    Provider.of<RoverPhotosViewModel>(context, listen: false)
+        .fetchLatestPhotos(widget.roverName);
     _getPhotos();
     selectBySolController = TextEditingController();
   }
@@ -65,6 +69,7 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var teste = Provider.of<RoverPhotosViewModel>(context);
     return Scaffold(
       backgroundColor: Colors.orange,
       body: SafeArea(
@@ -135,6 +140,7 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                 ),
               ),
             ),
+            Text(teste.loadingStatus.toString()),
             /*
             Expanded(
               child: GridView.builder(
