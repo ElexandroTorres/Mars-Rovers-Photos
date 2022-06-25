@@ -11,7 +11,7 @@ class RoverManifestRepository implements IRoverManifestRepository {
 
   @override
   Future<RoverManifest> getRoverManifest(String roverName) async {
-    var url = '${manifestUrl}/${roverName}/?api_key=${apiKey}';
+    var url = '$manifestUrl/$roverName/?api_key=$apiKey';
 
     RoverManifest roverManifest;
 

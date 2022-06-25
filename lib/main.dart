@@ -10,18 +10,6 @@ void main() {
 
 class MarsRoversPhotos extends StatelessWidget {
   const MarsRoversPhotos({Key? key}) : super(key: key);
-
-  /**
-   * MultiProvider(
-              providers: [
-                ChangeNotifierProvider(
-                  create: (_) => RoverPhotosViewModel(),
-                ),
-              ],
-              child: const SelectRoverScreen(),
-            ),
-   */
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -41,7 +29,6 @@ class MarsRoversPhotos extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.orange,
         ),
-        //home: const SelectRoverPage(),
       ),
     );
   }

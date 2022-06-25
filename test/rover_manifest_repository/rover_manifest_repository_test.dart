@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mars_rovers_photos/model/rover_manifest.dart';
-import 'package:mars_rovers_photos/repositories/mars_rover_photos_api_infos.dart';
 import 'package:mars_rovers_photos/repositories/rover_manifest_repository.dart';
+import 'package:mars_rovers_photos/utils/constants.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 //import 'rover_manifest_repository_test.mocks.dart';

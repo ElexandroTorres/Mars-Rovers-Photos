@@ -45,7 +45,7 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
     super.initState();
     Provider.of<RoverPhotosViewModel>(context, listen: false)
         .fetchLatestPhotos(widget.roverName);
-    _getPhotos();
+    //_getPhotos();
     selectBySolController = TextEditingController();
   }
 
@@ -69,7 +69,7 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var teste = Provider.of<RoverPhotosViewModel>(context);
+    var roverPhotosViewModel = Provider.of<RoverPhotosViewModel>(context);
     return Scaffold(
       backgroundColor: Colors.orange,
       body: SafeArea(
@@ -140,21 +140,18 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                 ),
               ),
             ),
-            Text(teste.loadingStatus.toString()),
-            /*
             Expanded(
               child: GridView.builder(
-                itemCount: photos.length,
+                itemCount: roverPhotosViewModel.roverPhotos.length,
                 itemBuilder: (context, index) {
                   return PhotoItem(
-                    imageUrl: photos[index].imgSrc,
+                    imageUrl: roverPhotosViewModel.roverPhotos[index].imgSrc,
                   );
                 },
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2),
               ),
             ),
-            */
           ],
         ),
       ),
