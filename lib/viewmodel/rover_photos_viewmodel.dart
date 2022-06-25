@@ -1,5 +1,4 @@
 import 'dart:core';
-
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:mars_rovers_photos/model/photo.dart';
@@ -32,25 +31,18 @@ class RoverPhotosViewModel extends ChangeNotifier {
 
   Future<void> fetchPhotosBySol(String roverName, int sol) async {
     try {
+      loadingStatus = LoadingStatus.searching;
       roverPhotos = await RoverPhotosRepository(client: http.Client())
           .getPhotosBySol(roverName, sol);
-    } catch (e) {}
+      if (roverPhotos.isEmpty) {
+        loadingStatus = LoadingStatus.empty;
+      } else {
+        loadingStatus = LoadingStatus.completed;
+      }
+      notifyListeners();
+    } catch (e) {
+      loadingStatus = LoadingStatus.fail;
+      notifyListeners();
+    }
   }
-  /*
-    _getPhotos() {
-    roverPhotosRepository.getLatestPhotos(widget.roverName).then((result) {
-      setState(() {
-        photos = result;
-      });
-    });
-  }
-
-  _getPhotosBySol({required int sol}) {
-    roverPhotosRepository.getPhotosBySol(widget.roverName, sol).then((result) {
-      setState(() {
-        photos = result;
-      });
-    });
-  }
-  */
 }

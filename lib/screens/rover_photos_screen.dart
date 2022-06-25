@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mars_rovers_photos/model/photo.dart';
 import 'package:mars_rovers_photos/repositories/rover_photos_repository.dart';
-import 'package:mars_rovers_photos/screens/photo_details_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:mars_rovers_photos/viewmodel/rover_photos_viewmodel.dart';
-import 'package:mars_rovers_photos/widgets/photo_item.dart';
+import 'package:mars_rovers_photos/widgets/PhotosGrid.dart';
 import 'package:provider/provider.dart';
 
 class RoverPhotosScreen extends StatefulWidget {
@@ -24,28 +23,11 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
 
   late final TextEditingController selectBySolController;
 
-  _getPhotos() {
-    roverPhotosRepository.getLatestPhotos(widget.roverName).then((result) {
-      setState(() {
-        photos = result;
-      });
-    });
-  }
-
-  _getPhotosBySol({required int sol}) {
-    roverPhotosRepository.getPhotosBySol(widget.roverName, sol).then((result) {
-      setState(() {
-        photos = result;
-      });
-    });
-  }
-
   @override
   void initState() {
     super.initState();
     Provider.of<RoverPhotosViewModel>(context, listen: false)
         .fetchLatestPhotos(widget.roverName);
-    //_getPhotos();
     selectBySolController = TextEditingController();
   }
 
@@ -129,10 +111,14 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                         ),
                         TextButton(
                           onPressed: () {
-                            _getPhotosBySol(
-                                sol: int.parse(selectBySolController.text));
+                            roverPhotosViewModel.fetchPhotosBySol(
+                                widget.roverName,
+                                int.parse(selectBySolController.text));
                           },
-                          child: Icon(Icons.search),
+                          child: Icon(
+                            Icons.search,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -140,20 +126,6 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                 ),
               ),
             ),
-            /*
-            Expanded(
-              child: GridView.builder(
-                itemCount: roverPhotosViewModel.roverPhotos.length,
-                itemBuilder: (context, index) {
-                  return PhotoItem(
-                    imageUrl: roverPhotosViewModel.roverPhotos[index].imgSrc,
-                  );
-                },
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
-              ),
-            ),
-            */
             Expanded(
               child: PhotosGrid(
                 photos: roverPhotosViewModel.roverPhotos,
@@ -162,26 +134,6 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class PhotosGrid extends StatelessWidget {
-  const PhotosGrid({Key? key, required this.photos}) : super(key: key);
-
-  final List<Photo> photos;
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      itemCount: photos.length,
-      itemBuilder: (context, index) {
-        return PhotoItem(
-          imageUrl: photos[index].imgSrc,
-        );
-      },
-      gridDelegate:
-          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mars_rovers_photos/model/rover_manifest.dart';
-import 'package:mars_rovers_photos/screens/rover_photos_screen.dart';
+import 'package:mars_rovers_photos/widgets/ItemRover.dart';
 
 class SelectRoverScreen extends StatelessWidget {
   const SelectRoverScreen({Key? key}) : super(key: key);
@@ -30,7 +30,7 @@ class SelectRoverScreen extends StatelessWidget {
                     color: Colors.amber,
                     roverManifest: roversManifests['curiosity']!),
                 ItemRover(
-                    color: Colors.black,
+                    color: Colors.brown,
                     roverManifest: roversManifests['spirit']!),
               ],
             ),
@@ -46,48 +46,6 @@ class SelectRoverScreen extends StatelessWidget {
                 ),
               ],
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ItemRover extends StatelessWidget {
-  final Color color;
-  final RoverManifest roverManifest;
-
-  const ItemRover({
-    Key? key,
-    required this.color,
-    required this.roverManifest,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                RoverPhotosScreen(roverName: roverManifest.name!),
-          ),
-        );
-      },
-      child: Container(
-        width: size.width / 2,
-        height: size.width / 2,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Column(
-          children: [
-            Text(roverManifest.name!),
-            Text(roverManifest.maxSol.toString()),
-            Text(roverManifest.status!)
           ],
         ),
       ),

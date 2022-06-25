@@ -7,7 +7,6 @@ class PhotoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //return Image.network(imageUrl!);
     final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {

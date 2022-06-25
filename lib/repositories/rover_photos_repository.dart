@@ -12,7 +12,7 @@ class RoverPhotosRepository implements IRoverPhotosRepository {
   @override
   Future<List<Photo>> getLatestPhotos(String roverName) async {
     final String url =
-        'https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/latest_photos?api_key=${apiKey}';
+        'https://api.nasa.gov/mars-photos/api/v1/rovers/$roverName/latest_photos?api_key=$apiKey';
 
     List<Photo> roverPhotos;
 
@@ -36,7 +36,7 @@ class RoverPhotosRepository implements IRoverPhotosRepository {
   @override
   Future<List<Photo>> getPhotosBySol(String roverName, int sol) async {
     final String url =
-        'https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?api_key=${apiKey}&sol=${sol}';
+        'https://api.nasa.gov/mars-photos/api/v1/rovers/$roverName/photos?api_key=$apiKey&sol=$sol';
 
     List<Photo> roverPhotos;
 
