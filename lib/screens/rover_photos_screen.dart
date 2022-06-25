@@ -140,6 +140,7 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                 ),
               ),
             ),
+            /*
             Expanded(
               child: GridView.builder(
                 itemCount: roverPhotosViewModel.roverPhotos.length,
@@ -152,9 +153,35 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                     crossAxisCount: 2),
               ),
             ),
+            */
+            Expanded(
+              child: PhotosGrid(
+                photos: roverPhotosViewModel.roverPhotos,
+              ),
+            ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class PhotosGrid extends StatelessWidget {
+  const PhotosGrid({Key? key, required this.photos}) : super(key: key);
+
+  final List<Photo> photos;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      itemCount: photos.length,
+      itemBuilder: (context, index) {
+        return PhotoItem(
+          imageUrl: photos[index].imgSrc,
+        );
+      },
+      gridDelegate:
+          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
     );
   }
 }
