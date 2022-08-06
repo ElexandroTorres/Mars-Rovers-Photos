@@ -19,6 +19,7 @@ class RoverManifestRepository implements IRoverManifestRepository {
 
     if (response.statusCode == 200) {
       var roverInfos = jsonDecode(response.body);
+      print(response.body.toString());
 
       roverManifest = RoverManifest.fromMap(roverInfos['photo_manifest']);
 

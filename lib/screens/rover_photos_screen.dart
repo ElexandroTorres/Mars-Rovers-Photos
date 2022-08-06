@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mars_rovers_photos/model/photo.dart';
+import 'package:mars_rovers_photos/model/rover_manifest.dart';
 import 'package:mars_rovers_photos/repositories/rover_photos_repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:mars_rovers_photos/viewmodel/rover_photos_viewmodel.dart';
@@ -7,9 +8,9 @@ import 'package:mars_rovers_photos/widgets/PhotosGrid.dart';
 import 'package:provider/provider.dart';
 
 class RoverPhotosScreen extends StatefulWidget {
-  final String roverName;
+  final RoverManifest roverManifest;
 
-  const RoverPhotosScreen({Key? key, required this.roverName})
+  const RoverPhotosScreen({Key? key, required this.roverManifest})
       : super(key: key);
 
   @override
@@ -27,7 +28,7 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
   void initState() {
     super.initState();
     Provider.of<RoverPhotosViewModel>(context, listen: false)
-        .fetchLatestPhotos(widget.roverName);
+        .fetchLatestPhotos(widget.roverManifest.name!);
     selectBySolController = TextEditingController();
   }
 
@@ -39,16 +40,8 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
 
   List<String> _dropDownItens = ['latest_photos', 'photos_by_sol'];
   String? _selectedItem = 'latest_photos';
-  /*
-  void dropDownCallBack(String? selectedItem) {
-    if (selectedValue is String) {
-      setState(() {
-        _dropValue = selectedValue;
-      });
-    }
-  }
-  */
 
+  int _currentSolValue = 1;
   @override
   Widget build(BuildContext context) {
     var roverPhotosViewModel = Provider.of<RoverPhotosViewModel>(context);
@@ -97,9 +90,22 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                       children: [
                         Text('Selecione o sol'),
                         SizedBox(width: 16),
+                        TextButton(
+                          onPressed: () {
+                            if (_currentSolValue <
+                                widget.roverManifest.maxSol!) {
+                              setState(() => _currentSolValue++);
+                            }
+                          },
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.black,
+                          ),
+                        ),
                         Expanded(
                           child: TextField(
-                            controller: selectBySolController,
+                            controller: selectBySolController
+                              ..text = _currentSolValue.toString(),
                             keyboardType: TextInputType.numberWithOptions(
                               signed: false,
                               decimal: false,
@@ -107,12 +113,28 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                             decoration: InputDecoration(
                               focusColor: Colors.orange,
                             ),
+                            onChanged: (value) {
+                              setState(() {
+                                _currentSolValue = int.parse(value);
+                              });
+                            },
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            if (_currentSolValue > 0) {
+                              setState(() => _currentSolValue--);
+                            }
+                          },
+                          child: Icon(
+                            Icons.remove,
+                            color: Colors.black,
                           ),
                         ),
                         TextButton(
                           onPressed: () {
                             roverPhotosViewModel.fetchPhotosBySol(
-                                widget.roverName,
+                                widget.roverManifest.name!,
                                 int.parse(selectBySolController.text));
                           },
                           child: Icon(

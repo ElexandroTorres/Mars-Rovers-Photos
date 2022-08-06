@@ -21,7 +21,7 @@ class ItemRover extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                RoverPhotosScreen(roverName: roverManifest.name!),
+                RoverPhotosScreen(roverManifest: roverManifest),
           ),
         );
       },
