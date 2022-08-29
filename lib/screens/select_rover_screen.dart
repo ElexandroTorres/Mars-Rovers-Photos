@@ -24,7 +24,35 @@ class SelectRoverScreen extends StatelessWidget {
             SizedBox(
               height: 16.0,
             ),
+            /*
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                childAspectRatio: 0.6,
+                mainAxisSpacing: 4,
+                crossAxisSpacing: 4,
+                children: [
+                  ItemRover(
+                      color: Colors.amber,
+                      roverManifest: roversManifests['curiosity']!),
+                  ItemRover(
+                      color: Colors.brown,
+                      roverManifest: roversManifests['spirit']!),
+                  ItemRover(
+                    color: Colors.yellow,
+                    roverManifest: roversManifests['opportunity']!,
+                  ),
+                  ItemRover(
+                    color: Colors.red,
+                    roverManifest: roversManifests['perseverance']!,
+                  ),
+                ],
+              ),
+            ),
+            */
+
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ItemRover(
                     color: Colors.amber,
@@ -35,6 +63,7 @@ class SelectRoverScreen extends StatelessWidget {
               ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ItemRover(
                   color: Colors.yellow,
