@@ -56,10 +56,12 @@ class SelectRoverScreen extends StatelessWidget {
               children: [
                 ItemRover(
                     color: Colors.amber,
-                    roverManifest: roversManifests['curiosity']!),
+                    roverManifest: roversManifests['curiosity']!,
+                    image: "assets/images/curiosity.jpg"),
                 ItemRover(
                     color: Colors.brown,
-                    roverManifest: roversManifests['spirit']!),
+                    roverManifest: roversManifests['spirit']!,
+                    image: "assets/images/spirit.jpeg"),
               ],
             ),
             Row(
@@ -68,10 +70,12 @@ class SelectRoverScreen extends StatelessWidget {
                 ItemRover(
                   color: Colors.yellow,
                   roverManifest: roversManifests['opportunity']!,
+                  image: "assets/images/opportunity.jpeg",
                 ),
                 ItemRover(
                   color: Colors.red,
                   roverManifest: roversManifests['perseverance']!,
+                  image: "assets/images/Perseverance.jpg",
                 ),
               ],
             ),

@@ -38,10 +38,15 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
     super.dispose();
   }
 
-  List<String> _dropDownItens = ['latest_photos', 'photos_by_sol'];
-  String? _selectedItem = 'latest_photos';
+  final List<String> _dropDownItens = [
+    'latest_photos',
+    'first_photos',
+    'photos_by_sol'
+  ];
 
+  String? _selectedItem = 'latest_photos';
   int _currentSolValue = 1;
+
   @override
   Widget build(BuildContext context) {
     var roverPhotosViewModel = Provider.of<RoverPhotosViewModel>(context);
@@ -63,12 +68,15 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                 child: Column(
                   children: [
                     Text(
-                      'Opções de busca',
+                      'Search Options',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text('Tipo de busca'),
+                        Text('Search type'),
                         DropdownButton(
                           value: _selectedItem,
                           items: _dropDownItens
@@ -79,71 +87,86 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                                 ),
                               )
                               .toList(),
-                          onChanged: (item) => setState(() {
-                            _selectedItem = item.toString();
-                          }),
+                          onChanged: (item) {
+                            setState(() {
+                              _selectedItem = item.toString();
+                            });
+                            if (_selectedItem == 'latest_photos') {
+                              roverPhotosViewModel.fetchLatestPhotos(
+                                  widget.roverManifest.name!);
+                            }
+                          },
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text('Selecione o sol'),
-                        SizedBox(width: 16),
-                        TextButton(
-                          onPressed: () {
-                            if (_currentSolValue <
-                                widget.roverManifest.maxSol!) {
-                              setState(() => _currentSolValue++);
-                            }
-                          },
-                          child: Icon(
-                            Icons.add,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Expanded(
-                          child: TextField(
-                            controller: selectBySolController
-                              ..text = _currentSolValue.toString(),
-                            keyboardType: TextInputType.numberWithOptions(
-                              signed: false,
-                              decimal: false,
-                            ),
-                            decoration: InputDecoration(
-                              focusColor: Colors.orange,
-                            ),
-                            onChanged: (value) {
-                              setState(() {
-                                _currentSolValue = int.parse(value);
-                              });
-                            },
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            if (_currentSolValue > 0) {
-                              setState(() => _currentSolValue--);
-                            }
-                          },
-                          child: Icon(
-                            Icons.remove,
-                            color: Colors.black,
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            roverPhotosViewModel.fetchPhotosBySol(
-                                widget.roverManifest.name!,
-                                int.parse(selectBySolController.text));
-                          },
-                          child: Icon(
-                            Icons.search,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
+                    _selectedItem == 'photos_by_sol'
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Icon(Icons.wb_sunny_outlined),
+                              TextButton(
+                                onPressed: () {
+                                  if (_currentSolValue <
+                                      widget.roverManifest.maxSol!) {
+                                    setState(() => _currentSolValue++);
+                                  }
+                                },
+                                child: Icon(
+                                  Icons.add,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Expanded(
+                                child: TextField(
+                                  controller: selectBySolController
+                                    ..text = _currentSolValue.toString(),
+                                  keyboardType: TextInputType.numberWithOptions(
+                                    signed: false,
+                                    decimal: false,
+                                  ),
+                                  decoration: InputDecoration(
+                                    focusColor: Colors.orange,
+                                  ),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      if (int.parse(value) < 0) {
+                                        _currentSolValue = 0;
+                                      } else if (int.parse(value) >
+                                          widget.roverManifest.maxSol!) {
+                                        _currentSolValue =
+                                            widget.roverManifest.maxSol!;
+                                      } else {
+                                        _currentSolValue = int.parse(value);
+                                      }
+                                    });
+                                  },
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  if (_currentSolValue > 0) {
+                                    setState(() => _currentSolValue--);
+                                  }
+                                },
+                                child: Icon(
+                                  Icons.remove,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  roverPhotosViewModel.fetchPhotosBySol(
+                                      widget.roverManifest.name!,
+                                      int.parse(selectBySolController.text));
+                                },
+                                child: Icon(
+                                  Icons.search,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Container(),
                   ],
                 ),
               ),
