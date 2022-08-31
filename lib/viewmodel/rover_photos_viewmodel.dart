@@ -29,6 +29,24 @@ class RoverPhotosViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> fetchFirstsPhotos(
+      String roverName, int firstDayWithPhotos) async {
+    try {
+      loadingStatus = LoadingStatus.searching;
+      roverPhotos = await RoverPhotosRepository(client: http.Client())
+          .getPhotosBySol(roverName, firstDayWithPhotos);
+      if (roverPhotos.isEmpty) {
+        loadingStatus = LoadingStatus.empty;
+      } else {
+        loadingStatus = LoadingStatus.completed;
+      }
+      notifyListeners();
+    } catch (e) {
+      loadingStatus = LoadingStatus.fail;
+      notifyListeners();
+    }
+  }
+
   Future<void> fetchPhotosBySol(String roverName, int sol) async {
     try {
       loadingStatus = LoadingStatus.searching;

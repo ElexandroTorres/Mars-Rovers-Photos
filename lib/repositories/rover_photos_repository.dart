@@ -29,11 +29,6 @@ class RoverPhotosRepository implements IRoverPhotosRepository {
   }
 
   @override
-  Future<List<Photo>> getPhotosByCamera(String roverName) {
-    throw UnimplementedError();
-  }
-
-  @override
   Future<List<Photo>> getPhotosBySol(String roverName, int sol) async {
     final String url =
         'https://api.nasa.gov/mars-photos/api/v1/rovers/$roverName/photos?api_key=$apiKey&sol=$sol';
@@ -53,6 +48,24 @@ class RoverPhotosRepository implements IRoverPhotosRepository {
     }
   }
 
-  //pesquisar por camera
-  //https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?api_key=DEMO_KEY&sol=1000&camera=fhaz
+  @override
+  Future<List<Photo>> getFirstsPhotos(
+      String roverName, int firstDayWithPhotos) async {
+    final String url =
+        'https://api.nasa.gov/mars-photos/api/v1/rovers/$roverName/photos?api_key=$apiKey&sol=$firstDayWithPhotos';
+
+    List<Photo> roverPhotos;
+
+    http.Response response = await client.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      Iterable roverPhotosResult = jsonDecode(response.body)['photos'];
+      roverPhotos =
+          roverPhotosResult.map((photo) => Photo.fromJson(photo)).toList();
+
+      return roverPhotos;
+    } else {
+      throw Exception('${response.statusCode}');
+    }
+  }
 }

@@ -31,6 +31,8 @@ class _SplashScreenState extends State<SplashScreen> {
     RoverManifest perseveranceManifest =
         await roverManifestRepository.getRoverManifest('Perseverance');
 
+    //Qualquer coisa, colocar o dia inicial aqui.
+
     Navigator.pushReplacementNamed(context, '/home', arguments: {
       'curiosity': curiosityManifest,
       'spirit': spiritManifest,
@@ -55,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   size: screenSize.width / 4,
                 ),
                 Text(
-                  'Baixando informações de marte...',
+                  'Loading infos from Mars...',
                   style: TextStyle(color: Colors.orange),
                 ),
               ],

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mars_rovers_photos/model/photo.dart';
 import 'package:mars_rovers_photos/model/rover_manifest.dart';
-import 'package:mars_rovers_photos/repositories/rover_photos_repository.dart';
-import 'package:http/http.dart' as http;
 import 'package:mars_rovers_photos/viewmodel/rover_photos_viewmodel.dart';
 import 'package:mars_rovers_photos/widgets/PhotosGrid.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +17,6 @@ class RoverPhotosScreen extends StatefulWidget {
 
 class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
   List<Photo> photos = [];
-  RoverPhotosRepository roverPhotosRepository =
-      RoverPhotosRepository(client: http.Client());
 
   late final TextEditingController selectBySolController;
 
@@ -67,7 +63,7 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Text(
+                    const Text(
                       'Search Options',
                       style: TextStyle(
                         fontSize: 16,
@@ -76,7 +72,7 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text('Search type'),
+                        const Text('Search type'),
                         DropdownButton(
                           value: _selectedItem,
                           items: _dropDownItens
@@ -94,6 +90,9 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                             if (_selectedItem == 'latest_photos') {
                               roverPhotosViewModel.fetchLatestPhotos(
                                   widget.roverManifest.name!);
+                            } else if (_selectedItem == 'first_photos') {
+                              roverPhotosViewModel.fetchFirstsPhotos(
+                                  widget.roverManifest.name!, 0);
                             }
                           },
                         ),
@@ -103,7 +102,7 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Icon(Icons.wb_sunny_outlined),
+                              const Icon(Icons.wb_sunny_outlined),
                               TextButton(
                                 onPressed: () {
                                   if (_currentSolValue <
@@ -111,7 +110,7 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                                     setState(() => _currentSolValue++);
                                   }
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   Icons.add,
                                   color: Colors.black,
                                 ),
@@ -120,11 +119,12 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                                 child: TextField(
                                   controller: selectBySolController
                                     ..text = _currentSolValue.toString(),
-                                  keyboardType: TextInputType.numberWithOptions(
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
                                     signed: false,
                                     decimal: false,
                                   ),
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     focusColor: Colors.orange,
                                   ),
                                   onChanged: (value) {
@@ -148,7 +148,7 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                                     setState(() => _currentSolValue--);
                                   }
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   Icons.remove,
                                   color: Colors.black,
                                 ),
@@ -159,7 +159,7 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                                       widget.roverManifest.name!,
                                       int.parse(selectBySolController.text));
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   Icons.search,
                                   color: Colors.black,
                                 ),
@@ -171,11 +171,22 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
                 ),
               ),
             ),
-            Expanded(
-              child: PhotosGrid(
-                photos: roverPhotosViewModel.roverPhotos,
-              ),
-            ),
+            roverPhotosViewModel.loadingStatus == LoadingStatus.searching
+                ? Expanded(
+                    child: Center(
+                      child: CircularProgressIndicator(color: Colors.black),
+                    ),
+                  )
+                : roverPhotosViewModel.loadingStatus == LoadingStatus.empty
+                    ? Container(
+                        child: Text(
+                            'There are no photos from the rover ${widget.roverManifest.name!} for the Sol selected'),
+                      )
+                    : Expanded(
+                        child: PhotosGrid(
+                          photos: roverPhotosViewModel.roverPhotos,
+                        ),
+                      ),
           ],
         ),
       ),
