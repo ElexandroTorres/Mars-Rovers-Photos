@@ -53,48 +53,82 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
           children: [
             Container(
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.grey,
-                  width: 1.5,
-                  style: BorderStyle.solid,
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.orange,
+                    Colors.orangeAccent,
+                    Colors.deepOrange
+                  ],
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
                 ),
+                borderRadius: BorderRadius.circular(5),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
                     const Text(
                       'Search Options',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 20,
                       ),
                     ),
+                    SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        const Text('Search type'),
-                        DropdownButton(
-                          value: _selectedItem,
-                          items: _dropDownItens
-                              .map(
-                                (item) => DropdownMenuItem(
-                                  value: item,
-                                  child: Text(item),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (item) {
-                            setState(() {
-                              _selectedItem = item.toString();
-                            });
-                            if (_selectedItem == 'latest_photos') {
-                              roverPhotosViewModel.fetchLatestPhotos(
-                                  widget.roverManifest.name!);
-                            } else if (_selectedItem == 'first_photos') {
-                              roverPhotosViewModel.fetchFirstsPhotos(
-                                  widget.roverManifest.name!, 0);
-                            }
-                          },
+                        const Text(
+                          'Search type',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        DecoratedBox(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(colors: [
+                              Colors.orange,
+                              Colors.orangeAccent,
+                            ]),
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                  color: Color.fromRGBO(0, 0, 0, 0.57),
+                                  blurRadius: 5) //blur radius of shadow
+                            ],
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 16, right: 4),
+                            child: DropdownButton(
+                              value: _selectedItem,
+                              items: _dropDownItens
+                                  .map(
+                                    (item) => DropdownMenuItem(
+                                      value: item,
+                                      child: Text(item),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (item) {
+                                setState(() {
+                                  _selectedItem = item.toString();
+                                });
+                                if (_selectedItem == 'latest_photos') {
+                                  roverPhotosViewModel.fetchLatestPhotos(
+                                      widget.roverManifest.name!);
+                                } else if (_selectedItem == 'first_photos') {
+                                  roverPhotosViewModel.fetchFirstsPhotos(
+                                      widget.roverManifest.name!, 0);
+                                }
+                              },
+                              iconEnabledColor: Colors.deepOrange,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontStyle: FontStyle.italic,
+                              ),
+                              dropdownColor: Colors.orangeAccent,
+                              underline: Container(),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -172,15 +206,17 @@ class _RoverPhotosScreenState extends State<RoverPhotosScreen> {
               ),
             ),
             roverPhotosViewModel.loadingStatus == LoadingStatus.searching
-                ? Expanded(
+                ? const Expanded(
                     child: Center(
                       child: CircularProgressIndicator(color: Colors.black),
                     ),
                   )
                 : roverPhotosViewModel.loadingStatus == LoadingStatus.empty
-                    ? Container(
-                        child: Text(
-                            'There are no photos from the rover ${widget.roverManifest.name!} for the Sol selected'),
+                    ? Center(
+                        child: Container(
+                          child: Text(
+                              'There are no photos from the rover ${widget.roverManifest.name!} for the Sol selected'),
+                        ),
                       )
                     : Expanded(
                         child: PhotosGrid(

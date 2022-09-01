@@ -14,72 +14,58 @@ class SelectRoverScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.orange,
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Select a rover',
-              style: TextStyle(fontSize: 32, fontStyle: FontStyle.italic),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.orange,
+                Colors.orangeAccent,
+                Colors.deepOrange,
+              ],
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
             ),
-            SizedBox(
-              height: 16.0,
-            ),
-            /*
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                childAspectRatio: 0.6,
-                mainAxisSpacing: 4,
-                crossAxisSpacing: 4,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Select a rover',
+                style: TextStyle(fontSize: 32, fontStyle: FontStyle.italic),
+              ),
+              SizedBox(
+                height: 16.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ItemRover(
                       color: Colors.amber,
-                      roverManifest: roversManifests['curiosity']!),
+                      roverManifest: roversManifests['curiosity']!,
+                      image: "assets/images/curiosity.jpg"),
                   ItemRover(
                       color: Colors.brown,
-                      roverManifest: roversManifests['spirit']!),
+                      roverManifest: roversManifests['spirit']!,
+                      image: "assets/images/spirit.jpeg"),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                   ItemRover(
                     color: Colors.yellow,
                     roverManifest: roversManifests['opportunity']!,
+                    image: "assets/images/opportunity.jpeg",
                   ),
                   ItemRover(
                     color: Colors.red,
                     roverManifest: roversManifests['perseverance']!,
+                    image: "assets/images/Perseverance.jpg",
                   ),
                 ],
               ),
-            ),
-            */
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ItemRover(
-                    color: Colors.amber,
-                    roverManifest: roversManifests['curiosity']!,
-                    image: "assets/images/curiosity.jpg"),
-                ItemRover(
-                    color: Colors.brown,
-                    roverManifest: roversManifests['spirit']!,
-                    image: "assets/images/spirit.jpeg"),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ItemRover(
-                  color: Colors.yellow,
-                  roverManifest: roversManifests['opportunity']!,
-                  image: "assets/images/opportunity.jpeg",
-                ),
-                ItemRover(
-                  color: Colors.red,
-                  roverManifest: roversManifests['perseverance']!,
-                  image: "assets/images/Perseverance.jpg",
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
