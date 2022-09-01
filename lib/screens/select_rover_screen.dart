@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mars_rovers_photos/model/rover_manifest.dart';
 import 'package:mars_rovers_photos/widgets/ItemRover.dart';
 
@@ -31,7 +32,10 @@ class SelectRoverScreen extends StatelessWidget {
             children: [
               Text(
                 'Select a rover',
-                style: TextStyle(fontSize: 32, fontStyle: FontStyle.italic),
+                style: GoogleFonts.lobster(
+                  textStyle:
+                      TextStyle(fontSize: 32, fontStyle: FontStyle.italic),
+                ),
               ),
               SizedBox(
                 height: 16.0,
@@ -42,11 +46,11 @@ class SelectRoverScreen extends StatelessWidget {
                   ItemRover(
                       color: Colors.amber,
                       roverManifest: roversManifests['curiosity']!,
-                      image: "assets/images/curiosity.jpg"),
+                      image: 'assets/images/curiosity.png'),
                   ItemRover(
                       color: Colors.brown,
                       roverManifest: roversManifests['spirit']!,
-                      image: "assets/images/spirit.jpeg"),
+                      image: 'assets/images/spirit.png'),
                 ],
               ),
               Row(
@@ -55,12 +59,12 @@ class SelectRoverScreen extends StatelessWidget {
                   ItemRover(
                     color: Colors.yellow,
                     roverManifest: roversManifests['opportunity']!,
-                    image: "assets/images/opportunity.jpeg",
+                    image: 'assets/images/oportunity.png',
                   ),
                   ItemRover(
                     color: Colors.red,
                     roverManifest: roversManifests['perseverance']!,
-                    image: "assets/images/Perseverance.jpg",
+                    image: 'assets/images/perseverance.png',
                   ),
                 ],
               ),

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mars_rovers_photos/model/rover_manifest.dart';
 import 'package:mars_rovers_photos/screens/rover_photos_screen.dart';
 
@@ -119,7 +120,7 @@ class ItemRover extends StatelessWidget {
                                         fontSize: 10, color: Colors.white),
                                   ),
                                   Text(
-                                    roverManifest.launchDate.toString(),
+                                    roverManifest.launchDate!,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 10,
