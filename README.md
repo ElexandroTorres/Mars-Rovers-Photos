@@ -17,8 +17,6 @@ Um sol é como são chamados os dias em marte, ou seja, o periodo em que o plane
 
 ### Telas do aplicativo em um celular Sansung A01
 
-##### Tela de seleção de rover
-
 <p float="left">
 
 <img  alt="Imagem mostrando a tela inicial do aplicativo, onde é possivel escolher um dentre os quatro rovers para se vizualizar as imagens."  title="Tela  de seleção do rover"  src="./screenshots/select_rover_screen.jpg" width="200"> 
