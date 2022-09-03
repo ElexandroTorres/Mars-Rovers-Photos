@@ -30,4 +30,13 @@ Um sol é como são chamados os dias em marte, ou seja, o periodo em que o plane
 
 <img  alt="Tela de busca pelas primeiras fotos"  title="Tela de busca pelas primeiras fotos"  src="./screenshots/firsts_photos.jpg" width="200"> 
 
-<img  alt="gif firths photos"  title="gif first photos"  src="./screenshots/gifs/firts_photos.gif" width="200"> 
+<img  alt="gif mostrando o comportamento quando selecionado a opção das primeiras fotos"  title="gif first photos"  src="./screenshots/gifs/firts_photos.gif" width="200"> 
+
+<img  alt="gif mostrando o comportamento quando selecionado a opção das fotos mais recentes"  title="gif latest photos"  src="./screenshots/gifs/latest_photos_gif.gif" width="200"> 
+
+<img  alt="gif mostrando o comportamento quando selecionado a opção de pesquisa de fotos por sol"  title="gif photos by sol"  src="./screenshots/gifs/photos_by_sol.gif" width="200"> 
+
+<img  alt="gif mostrando o comportamento quando é selecionada uma foto para visualização"  title="gif foto selecionada"  src="./screenshots/gifs/photo_zoom.gif" width="200"> 
+
+<img  alt="gif mostrando o comportamento quando é selecionada uma foto para visualização"  title="gif foto selecionada"  src="./screenshots/gifs/photo_zoom_2.gif" width="200"> 
+</p>
